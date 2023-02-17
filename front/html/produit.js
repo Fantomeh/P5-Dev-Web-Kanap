@@ -47,18 +47,12 @@ bouton.addEventListener("click", function () {
     quantity: document.querySelector("#quantity").value,
     });
     console.log(panier);
+    localStorage.setItem("panier", JSON.stringify(panier));
     });
 
 
 
-
-
-
-
 })
-
-
-
 
 
     //sauvegardé le panier en mémoir grace a localstorage 

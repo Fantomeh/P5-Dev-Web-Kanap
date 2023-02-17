@@ -5,7 +5,7 @@ fetch("http://localhost:3000/api/products/")
     for (canape of magasin) {
 
       const articleCanape = document.createElement("article")
-      document.querySelector(".produit").appendChild(articleCanape)
+      document.querySelector("#items").appendChild(articleCanape)
 
       const imgCanape = document.createElement("img")
       imgCanape.src = canape.imageUrl
