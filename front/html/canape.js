@@ -21,10 +21,12 @@ fetch("http://localhost:3000/api/products/")
 
       const nameCanape = document.createElement("h3")
       nameCanape.textContent = canape.name
+      nameCanape.classList.add("productName")
       articleCanape.appendChild(nameCanape)
 
       const descriptionCanape = document.createElement("p")
       descriptionCanape.textContent = canape.description
+      descriptionCanape.classList.add("productDescription")
       articleCanape.appendChild(descriptionCanape)
 
     }
