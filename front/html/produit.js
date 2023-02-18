@@ -1,5 +1,9 @@
-const url = window.location.href;
-const id = url.split("id=")[1];
+//const url = window.location.href;
+//const id = url.split("id=")[1];
+
+const urlParams = new URLSearchParams(window.location.search);
+const id = urlParams.get("id");
+
 
 fetch("http://localhost:3000/api/products/" + id)
     .then((res) => res.json())
@@ -52,7 +56,7 @@ bouton.addEventListener("click", function () {
 
 
 
-})
+})             
 
 
     //sauvegardé le panier en mémoir grace a localstorage 
