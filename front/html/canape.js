@@ -2,21 +2,21 @@ fetch("http://localhost:3000/api/products/")
   .then((res) => res.json())
   .then(function (magasin) {
 
-    for (canape of magasin) {
+    for (let canape of magasin) {
 
+      const idcanape = "http://127.0.0.1:5500/front/html/product.html?id="
+      const lienCanape = document.createElement("a");
+      lienCanape.href =  idcanape + canape._id;
+      document.querySelector("#items").appendChild(lienCanape)
+      
       const articleCanape = document.createElement("article")
-      document.querySelector("#items").appendChild(articleCanape)
+      lienCanape.appendChild(articleCanape);
 
       const imgCanape = document.createElement("img")
       imgCanape.src = canape.imageUrl
       imgCanape.classList.add("produit-img")
       articleCanape.appendChild(imgCanape)
-
-      const idcanape = "http://127.0.0.1:5500/front/html/product.html?id="
-      const lienCanape = document.createElement("a");
-      lienCanape.href =  idcanape + canape._id;
-      lienCanape.appendChild(imgCanape);
-      articleCanape.appendChild(lienCanape);
+      imgCanape.setAttribute("alt", canape.altTxt);
       
 
       const nameCanape = document.createElement("h3")

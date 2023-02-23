@@ -15,6 +15,7 @@ fetch("http://localhost:3000/api/products/" + id)
         imgCanape.src = canape.imageUrl;
         const item__img = document.querySelector(".item__img");
         item__img.appendChild(imgCanape);
+        imgCanape.setAttribute("alt", canape.altTxt);
 
         const nameCanape = document.querySelector("#title");
         nameCanape.innerText = canape.name;
@@ -39,28 +40,42 @@ fetch("http://localhost:3000/api/products/" + id)
 
 
 
-const panier = []
+        const panier = JSON.parse(localStorage.getItem("panier")) || [];
 
-const bouton = document.querySelector("#addToCart")
-
-bouton.addEventListener("click", function () {
-    const selectedColor = select.value;
-    panier.push({
-    id: id,
-    color: selectedColor,
-    quantity: document.querySelector("#quantity").value,
-    });
-    console.log(panier);
-    localStorage.setItem("panier", JSON.stringify(panier));
-    });
-
+        const bouton = document.querySelector("#addToCart");
+        
+        bouton.addEventListener("click", function () {
+          const selectedColor = select.value;
+          const selectedQuantity = document.querySelector("#quantity").value;
+        
+          // Vérifiez si un canapé avec le même ID existe déjà dans le panier
+          const existingCanapeIndex = panier.findIndex(
+            (canape) => canape.id === id && canape.color === selectedColor
+          );
+        
+          // Si un canapé avec le même ID et la même couleur existe déjà, incrémentez la quantité
+          if (existingCanapeIndex !== -1) {
+            panier[existingCanapeIndex].quantity =
+              parseInt(panier[existingCanapeIndex].quantity) +
+              parseInt(selectedQuantity);
+          } else {
+            // Sinon, ajoutez un nouvel objet pour ce canapé dans le panier
+            panier.push({
+              id: id,
+              color: selectedColor,
+              quantity: selectedQuantity,
+            });
+          }
+        
+          console.log(panier);
+          localStorage.setItem("panier", JSON.stringify(panier));
+        });
+        
 
 
 })             
 
 
-    //sauvegardé le panier en mémoir grace a localstorage 
-    //trouvé comment transformé le panier en text 
 
 
 
