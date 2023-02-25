@@ -26,7 +26,7 @@ for (let canape of panier) {
 
             const divCartItemImg = document.createElement("div")
             articleCanape.appendChild(divCartItemImg)
-            divCartItemImg.classList.add("cart_item__img")
+            divCartItemImg.classList.add("cart__item__img")
 
             const imageAchatCanape = document.createElement("img")
             divCartItemImg.appendChild(imageAchatCanape)
@@ -65,6 +65,7 @@ for (let canape of panier) {
 
             const pquantity = document.createElement("p")
             cartItemContentSettingQuantity.appendChild(pquantity)
+            pquantity.textContent = "Qté : €";
 
             inputItemQuantity = document.createElement("input")
             cartItemContentSettingQuantity.appendChild(inputItemQuantity)
@@ -73,8 +74,18 @@ for (let canape of panier) {
             inputItemQuantity.name = "itemQuantity";
             inputItemQuantity.min = "1";
             inputItemQuantity.max = "100";
-            inputItemQuantity.value = canape.quantity;
+            inputItemQuantity.value = parseInt(canape.quantity);
 
+       // Ajoutez un événement pour écouter les modifications de quantité et mettre à jour le panier
+inputItemQuantity.addEventListener("input", function () {
+    const newQuantity = parseInt(inputItemQuantity.value);
+    if (newQuantity > 0 && newQuantity <= 100) {
+    canape.quantity = newQuantity;
+    localStorage.setItem("panier", JSON.stringify(panier));
+    } else {
+    inputItemQuantity.value = canape.quantity;
+    }
+    });
             const cartItemContentSettingDelete = document.createElement("div")
             cartItemContentSetting.appendChild(cartItemContentSettingDelete)
             cartItemContentSettingDelete.classList.add("cart__item__content__settings__delete")
