@@ -4,9 +4,9 @@ fetch("http://localhost:3000/api/products/")
 
     for (let canape of magasin) {
 
-      const idcanape = "http://127.0.0.1:5500/front/html/product.html?id="
+      const productPagePath = "product.html?id="
       const lienCanape = document.createElement("a");
-      lienCanape.href =  idcanape + canape._id;
+      lienCanape.href =  productPagePath + canape._id;
       document.querySelector("#items").appendChild(lienCanape)
       
       const articleCanape = document.createElement("article")

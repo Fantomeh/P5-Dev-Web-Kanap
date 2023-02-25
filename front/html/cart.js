@@ -117,6 +117,9 @@ formCanape.addEventListener("submit", function (event) {
     const address = document.querySelector("#address").value;
     const city = document.querySelector("#city").value;
     const email = document.querySelector("#email").value;
+
+ 
+
     console.log(firstName, lastName, address, city, email)
     console.log(panier.map((produit) => produit.id))
     fetch("http://localhost:3000/api/products/order", {
