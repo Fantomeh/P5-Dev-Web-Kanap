@@ -1,35 +1,43 @@
-fetch("http://localhost:3000/api/products/")
-  .then((res) => res.json())
-  .then(function (magasin) {
+// Fetch les produits à partir de l'API
+fetch("http://localhost:3000/api/products/") // envoi une requéte HTTP au SERVEUR 
+  .then((res) => res.json()) // Convertir la réponse en JSON
+  .then(function (magasin) { // magasin c'est une fonction anonyme
+    // c'est la variable qui va contenir les réponse du serveur 
 
+    // Pour chaque produit dans le magasin
     for (let canape of magasin) {
 
-      const productPagePath = "product.html?id="
+      // Défini le chemin vers la page du produit
+      const productPagePath = "product.html?id=";
+
+      // Créer un lien vers la page du produit
       const lienCanape = document.createElement("a");
       lienCanape.href =  productPagePath + canape._id;
-      document.querySelector("#items").appendChild(lienCanape)
+      document.querySelector("#items").appendChild(lienCanape);
       
-      const articleCanape = document.createElement("article")
+      // Créer un élément article pour chaque produit
+      const articleCanape = document.createElement("article");
       lienCanape.appendChild(articleCanape);
 
-      const imgCanape = document.createElement("img")
-      imgCanape.src = canape.imageUrl
-      imgCanape.classList.add("produit-img")
-      articleCanape.appendChild(imgCanape)
+      // Créer une image pour le produit
+      const imgCanape = document.createElement("img");
+      imgCanape.src = canape.imageUrl;
+      imgCanape.classList.add("produit-img");
+      articleCanape.appendChild(imgCanape);
       imgCanape.setAttribute("alt", canape.altTxt);
       
 
-      const nameCanape = document.createElement("h3")
-      nameCanape.textContent = canape.name
-      nameCanape.classList.add("productName")
-      articleCanape.appendChild(nameCanape)
+      // Créer un titre pour le produit
+      const nameCanape = document.createElement("h3");
+      nameCanape.textContent = canape.name;
+      nameCanape.classList.add("productName");
+      articleCanape.appendChild(nameCanape);
 
-      const descriptionCanape = document.createElement("p")
-      descriptionCanape.textContent = canape.description
-      descriptionCanape.classList.add("productDescription")
-      articleCanape.appendChild(descriptionCanape)
+      // Créer une description pour le produit
+      const descriptionCanape = document.createElement("p");
+      descriptionCanape.textContent = canape.description;
+      descriptionCanape.classList.add("productDescription");
+      articleCanape.appendChild(descriptionCanape);
 
     }
   })
-
-

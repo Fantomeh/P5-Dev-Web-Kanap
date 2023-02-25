@@ -76,16 +76,16 @@ for (let canape of panier) {
             inputItemQuantity.max = "100";
             inputItemQuantity.value = parseInt(canape.quantity);
 
-       // Ajoutez un événement pour écouter les modifications de quantité et mettre à jour le panier
-inputItemQuantity.addEventListener("input", function () {
-    const newQuantity = parseInt(inputItemQuantity.value);
-    if (newQuantity > 0 && newQuantity <= 100) {
-    canape.quantity = newQuantity;
-    localStorage.setItem("panier", JSON.stringify(panier));
-    } else {
-    inputItemQuantity.value = canape.quantity;
-    }
-    });
+            // Ajoutez un événement pour écouter les modifications de quantité et mettre à jour le panier
+            inputItemQuantity.addEventListener("input", function () {
+                const newQuantity = parseInt(inputItemQuantity.value);
+                if (newQuantity > 0 && newQuantity <= 100) {
+                    canape.quantity = newQuantity;
+                    localStorage.setItem("panier", JSON.stringify(panier));
+                } else {
+                    inputItemQuantity.value = canape.quantity;
+                }
+            });
             const cartItemContentSettingDelete = document.createElement("div")
             cartItemContentSetting.appendChild(cartItemContentSettingDelete)
             cartItemContentSettingDelete.classList.add("cart__item__content__settings__delete")
@@ -99,10 +99,9 @@ inputItemQuantity.addEventListener("input", function () {
                 console.log(article.getAttribute("data-id"));
                 const canapeId = article.getAttribute("data-id")
                 const canapeColor = article.getAttribute("data-color")
-                //panier.find((produitPanier)=>produitPanier.color === canapeColor)
                 const canapeIndex = panier.findIndex((produitPanier) => produitPanier.color === canapeColor && produitPanier.id === canapeId)
 
-
+            
                 console.log(panier)
 
                 panier.splice(canapeIndex, 1);
@@ -120,6 +119,8 @@ inputItemQuantity.addEventListener("input", function () {
 
 }
 
+
+
 const formCanape = document.querySelector(".cart__order__form")
 formCanape.addEventListener("submit", function (event) {
     event.preventDefault()
@@ -133,13 +134,13 @@ formCanape.addEventListener("submit", function (event) {
     if (/\d/.test(firstName) || /\d/.test(lastName) || /\d/.test(city)) {
         alert("Veuillez entrer uniquement des caractères alphabétiques pour votre nom, votre prénom, votre ville et votre adresse email");
         return;
-      }
+    }
 
     console.log(firstName, lastName, address, city, email)
     console.log(panier.map((produit) => produit.id))
     fetch("http://localhost:3000/api/products/order", {
         method: "post",
-        headers:{
+        headers: {
             "Content-Type": "application/json"
         },
         body: JSON.stringify({
@@ -153,10 +154,10 @@ formCanape.addEventListener("submit", function (event) {
             products: panier.map((produit) => produit.id)
         })
     })
-    .then((res) => res.json())
-    .then((order)=>{
-        window.location.href = "confirmation.html?orderId="+ order.orderId
-    })
+        .then((res) => res.json())
+        .then((order) => {
+            window.location.href = "confirmation.html?orderId=" + order.orderId
+        })
 })
 
 
