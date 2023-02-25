@@ -3,3 +3,5 @@ const id = urlParams.get("orderId");
 
 const commande = document.querySelector("#orderId")
 commande.textContent = id 
+
+console.log(orderId)

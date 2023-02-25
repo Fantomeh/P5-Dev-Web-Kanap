@@ -118,7 +118,11 @@ formCanape.addEventListener("submit", function (event) {
     const city = document.querySelector("#city").value;
     const email = document.querySelector("#email").value;
 
- 
+    // Vérifiez si les entrées "firstName", "lastName", "city", et "email" ne contiennent que des lettres
+    if (/\d/.test(firstName) || /\d/.test(lastName) || /\d/.test(city)) {
+        alert("Veuillez entrer uniquement des caractères alphabétiques pour votre nom, votre prénom, votre ville et votre adresse email");
+        return;
+      }
 
     console.log(firstName, lastName, address, city, email)
     console.log(panier.map((produit) => produit.id))
@@ -139,8 +143,8 @@ formCanape.addEventListener("submit", function (event) {
         })
     })
     .then((res) => res.json())
-    .then((res)=>{
-        window.location.href = "confirmation.html?orderId="+ res.orderId
+    .then((order)=>{
+        window.location.href = "confirmation.html?orderId="+ order.orderId
     })
 })
 
