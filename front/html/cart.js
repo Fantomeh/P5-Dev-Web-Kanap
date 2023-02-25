@@ -56,12 +56,12 @@ for (let canape of panier) {
             cartItemContentDescription.appendChild(prixCapane)
 
             const cartItemContentSetting = document.createElement("div")
-            articleCanape.appendChild(cartItemContentSetting)
+            cartItemContent.appendChild(cartItemContentSetting)
             cartItemContentSetting.classList.add("cart__item__content__settings")
 
             const cartItemContentSettingQuantity = document.createElement("div")
             cartItemContentSetting.appendChild(cartItemContentSettingQuantity)
-            cartItemContentSetting.classList.add("cart__item__content__settings__quantity")
+            cartItemContentSettingQuantity.classList.add("cart__item__content__settings__quantity")
 
             const pquantity = document.createElement("p")
             cartItemContentSettingQuantity.appendChild(pquantity)
@@ -76,7 +76,7 @@ for (let canape of panier) {
             inputItemQuantity.value = canape.quantity;
 
             const cartItemContentSettingDelete = document.createElement("div")
-            articleCanape.appendChild(cartItemContentSettingDelete)
+            cartItemContentSetting.appendChild(cartItemContentSettingDelete)
             cartItemContentSettingDelete.classList.add("cart__item__content__settings__delete")
 
             const pDelete = document.createElement("p")
