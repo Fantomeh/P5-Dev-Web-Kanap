@@ -60,7 +60,7 @@ for (let canape of panier) {
 
             const pquantity = document.createElement("p")
             cartItemContentSettingQuantity.appendChild(pquantity)
-            pquantity.textContent = "Qté : €";
+            pquantity.textContent = "Qté :  ";
 
             inputItemQuantity = document.createElement("input")
             cartItemContentSettingQuantity.appendChild(inputItemQuantity)
@@ -111,20 +111,44 @@ for (let canape of panier) {
                 window.location.reload()
 
                 console.log(panier)
-
-
             })
         })
 
-
-
-
 }
 
+
+
+// Calcul du nombre total d'articles
+let totalQuantity = 0;
+for (const canape of panier) {
+    totalQuantity += canape.quantity;
+}
+
+// Affichage du nombre total d'articles
+const totalQuantityElement = document.querySelector("#totalQuantity");
+totalQuantityElement.textContent = totalQuantity;
+
+// Calcul du prix total
+let totalPrice = 0;
+for (const canape of panier) {
+    // Récupération du produit depuis l'API
+    fetch("http://localhost:3000/api/products/" + canape.id)
+        .then((res) => res.json())
+        .then(function (product) {
+            totalPrice += product.price * canape.quantity;
+            // Affichage du prix total
+            const totalPriceElement = document.querySelector("#totalPrice");
+            totalPriceElement.textContent = totalPrice.toFixed(2);
+        })
+    }
+
+
 // Ajout d'un écouteur d'événement pour le formulaire de commande
-const formCanape = document.querySelector(".cart__order__form")
+const formCanape = document.querySelector(".cart__order__form");
 formCanape.addEventListener("submit", function (event) {
-    event.preventDefault()
+    event.preventDefault();
+
+
     // Récupération des données du formulaire
     const firstName = document.querySelector("#firstName").value;
     const lastName = document.querySelector("#lastName").value;
@@ -136,36 +160,46 @@ formCanape.addEventListener("submit", function (event) {
     const regexLetters = /^[a-zA-Z]+$/; // expression régulière pour vérifier que les entrées ne contiennent que des lettres
     const regexEmail = /^\S+@\S+\.\S+$/; // expression régulière pour vérifier le format de l'email
 
+    // Validation du prénom
     if (!regexLetters.test(firstName)) {
-        firstNameErrorMsg = document.querySelector("#firstNameErrorMsg")
-        firstNameErrorMsg.textContent = "Veuillez entrer uniquement des lettres pour le prénom";
-        
+        document.querySelector("#firstNameErrorMsg").textContent = "Veuillez entrer uniquement des lettres pour le prénom.";
         return;
+    } else {
+        document.querySelector("#firstNameErrorMsg").textContent = ""; // Efface le message d'erreur
     }
 
+    // Validation du nom
     if (!regexLetters.test(lastName)) {
-        lastNameErrorMsg = document.querySelector("#lastNameErrorMsg")
-        lastNameErrorMsg.textContent = "Veuillez entrer uniquement des lettres pour le nom.";
+        document.querySelector("#lastNameErrorMsg").textContent = "Veuillez entrer uniquement des lettres pour le nom.";
         return;
+    } else {
+        document.querySelector("#lastNameErrorMsg").textContent = ""; // Efface le message d'erreur
     }
 
+    // Validation de l'adresse
     if (address === "") {
-        addressErrorMsg = document.querySelector("#addressErrorMsg")
-        addressErrorMsg.textContent = "Veuillez entrer une adresse valide"
+        document.querySelector("#addressErrorMsg").textContent = "Veuillez entrer une adresse valide.";
         return;
+    } else {
+        document.querySelector("#addressErrorMsg").textContent = ""; // Efface le message d'erreur
     }
 
+    // Validation de la ville
     if (!regexLetters.test(city)) {
-        cityErrorMsg = document.querySelector("#cityErrorMsg")
-        cityErrorMsg.textContent = "Veuillez entrer uniquement des lettres pour la ville.";
+        document.querySelector("#cityErrorMsg").textContent = "Veuillez entrer uniquement des lettres pour la ville.";
         return;
+    } else {
+        document.querySelector("#cityErrorMsg").textContent = ""; // Efface le message d'erreur
     }
 
+    // Validation de l'email
     if (!regexEmail.test(email)) {
-        emailErrorMsg = document.querySelector("#emailErrorMsg")
-        emailErrorMsg.textContent = "Veuillez entrer une adresse email valide.";
+        document.querySelector("#emailErrorMsg").textContent = "Veuillez entrer une adresse email valide.";
         return;
+    } else {
+        document.querySelector("#emailErrorMsg").textContent = ""; // Efface le message d'erreur
     }
+
 
 
     console.log(firstName, lastName, address, city, email)
