@@ -117,7 +117,7 @@ for (let canape of panier) {
 }
 
 function updateTotalQuantity() {
-   // Calcul du nombre total d'articles
+    // Calcul du nombre total d'articles
     let totalQuantity = 0;
     for (const canape of panier) {
         totalQuantity += canape.quantity;
@@ -133,18 +133,14 @@ updateTotalQuantity()
 
 function updateTotalPrice() {
     let totalPrice = 0;
-    for(const canape of products){
+    for (const canape of products) {
         totalPrice += canape.price * canape.quantity
-        
+
     }
 
     const totalPriceElement = document.querySelector("#totalPrice");
     totalPriceElement.textContent = totalPrice.toFixed(2);
 }
-
-
-
-
 
 // Ajout d'un écouteur d'événement pour le formulaire de commande
 const formCanape = document.querySelector(".cart__order__form");
@@ -208,7 +204,7 @@ boutonForm.addEventListener("click", function (event) {
     if (validation === false) {
         return
     }
-    
+
 
     // Envoi de la commande au serveur
     fetch("http://localhost:3000/api/products/order", {

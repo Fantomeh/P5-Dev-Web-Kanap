@@ -12,9 +12,9 @@ fetch("http://localhost:3000/api/products/") // envoi une requéte HTTP au SERVE
 
       // Créer un lien vers la page du produit
       const lienCanape = document.createElement("a");
-      lienCanape.href =  productPagePath + canape._id;
+      lienCanape.href = productPagePath + canape._id;
       document.querySelector("#items").appendChild(lienCanape);
-      
+
       // Créer un élément article pour chaque produit
       const articleCanape = document.createElement("article");
       lienCanape.appendChild(articleCanape);
@@ -25,7 +25,7 @@ fetch("http://localhost:3000/api/products/") // envoi une requéte HTTP au SERVE
       imgCanape.classList.add("produit-img");
       articleCanape.appendChild(imgCanape);
       imgCanape.setAttribute("alt", canape.altTxt);
-      
+
 
       // Créer un titre pour le produit
       const nameCanape = document.createElement("h3");

@@ -6,12 +6,12 @@ const id = urlParams.get("id");
 fetch("http://localhost:3000/api/products/" + id)
   .then((res) => res.json())
   .then(function (canape) {
-    
-// Si le produit n'existe pas, supprimez toute la page
-if (!canape._id) {
-  document.body.innerHTML = '';
-  return;
-  }
+
+    // Si le produit n'existe pas, supprimez toute la page
+    if (!canape._id) {
+      document.body.innerHTML = '';
+      return;
+    }
 
     // On crée une image pour le produit et on l'ajoute à la page
     const imgCanape = document.createElement("img");
@@ -66,13 +66,13 @@ if (!canape._id) {
       );
 
       // Si le produit n'est pas dans le panier, on l'ajoute avec la quantité spécifiée
-      if(existingCanapeIndex === -1){
+      if (existingCanapeIndex === -1) {
         // On vérifie si la quantité totale de produits ne dépasse pas 100
-        if(selectedQuantity > 100){
+        if (selectedQuantity > 100) {
           alert("Vous ne pouvez ajouter plus de 100 canapés.");
           return;
         }
-        
+
         panier.push({
           id: id,
           color: selectedColor,
@@ -82,7 +82,7 @@ if (!canape._id) {
       } else {
         // Sinon (si un canapé avec le même ID et la même couleur existe déjà), incrémentez la quantité
 
-        if( selectedQuantity + panier[existingCanapeIndex].quantity > 100){
+        if (selectedQuantity + panier[existingCanapeIndex].quantity > 100) {
           const calculQuantity = 100 - panier[existingCanapeIndex].quantity
           alert("Désolé, vous ne pouvez ajouter que " + calculQuantity + " articles supplémentaires de ce produit à votre panier.")
           return
@@ -90,7 +90,7 @@ if (!canape._id) {
         panier[existingCanapeIndex].quantity += selectedQuantity
         alert("Les articles sélectionnés ont été ajoutés au panier avec succès.")
       }
- // On affiche le contenu du panier dans la console et on le sauvegarde dans le stockage local
+      // On affiche le contenu du panier dans la console et on le sauvegarde dans le stockage local
       console.log(panier);
       localStorage.setItem("panier", JSON.stringify(panier));
     });
