@@ -1,29 +1,22 @@
-
-
-
-
-
+// Récupération des produits du panier depuis le stockage local
 const panier = JSON.parse(localStorage.getItem("panier"));
-// const id = panier[0].id;
-// console.log(id);
 
+
+// Parcours de tous les produits dans le panier
 for (let canape of panier) {
-
-
-
-
-
+    // Récupération du produit depuis l'API
     fetch("http://localhost:3000/api/products/" + canape.id)
         .then((res) => res.json())
         .then(function (product) {
 
-
+            // Création de l'élément d'article pour le produit dans le panier
             const articleCanape = document.createElement("article")
             document.querySelector("#cart__items").appendChild(articleCanape)
             articleCanape.classList.add("cart__item")
             articleCanape.setAttribute("data-id", canape.id);
             articleCanape.setAttribute("data-color", canape.color);
 
+            // Ajout de l'image du produit dans le panier
             const divCartItemImg = document.createElement("div")
             articleCanape.appendChild(divCartItemImg)
             divCartItemImg.classList.add("cart__item__img")
@@ -34,6 +27,7 @@ for (let canape of panier) {
             imageAchatCanape.src = product.imageUrl
             imageAchatCanape.classList.add("cart__item__img")
 
+            // Ajout du nom, de la couleur et du prix du produit dans le panier
             const cartItemContent = document.createElement("div")
             articleCanape.appendChild(cartItemContent)
             cartItemContent.classList.add("cart__item__content")
@@ -55,6 +49,7 @@ for (let canape of panier) {
             prixCapane.textContent = product.price + ("€")
             cartItemContentDescription.appendChild(prixCapane)
 
+            // Ajout de la quantité et de la possibilité de la modifier
             const cartItemContentSetting = document.createElement("div")
             cartItemContent.appendChild(cartItemContentSetting)
             cartItemContentSetting.classList.add("cart__item__content__settings")
@@ -82,10 +77,15 @@ for (let canape of panier) {
                 if (newQuantity > 0 && newQuantity <= 100) {
                     canape.quantity = newQuantity;
                     localStorage.setItem("panier", JSON.stringify(panier));
+                    window.location.reload();
                 } else {
                     inputItemQuantity.value = canape.quantity;
                 }
             });
+
+            console.log(panier)
+
+            // Ajout de la possibilité de supprimer le produit dans le panier
             const cartItemContentSettingDelete = document.createElement("div")
             cartItemContentSetting.appendChild(cartItemContentSettingDelete)
             cartItemContentSettingDelete.classList.add("cart__item__content__settings__delete")
@@ -95,20 +95,22 @@ for (let canape of panier) {
             pDelete.classList.add("deleteItem")
             pDelete.textContent = "Supprimer";
             pDelete.addEventListener("click", function () {
+                // Trouver l'article qui doit être supprimé
                 const article = pDelete.closest(".cart__item")
                 console.log(article.getAttribute("data-id"));
                 const canapeId = article.getAttribute("data-id")
                 const canapeColor = article.getAttribute("data-color")
                 const canapeIndex = panier.findIndex((produitPanier) => produitPanier.color === canapeColor && produitPanier.id === canapeId)
 
-            
-                console.log(panier)
 
+
+                // Supprimer l'article du panier
                 panier.splice(canapeIndex, 1);
                 console.log(panier);
                 localStorage.setItem("panier", JSON.stringify(panier));
                 window.location.reload()
 
+                console.log(panier)
 
 
             })
@@ -119,25 +121,57 @@ for (let canape of panier) {
 
 }
 
-
-
+// Ajout d'un écouteur d'événement pour le formulaire de commande
 const formCanape = document.querySelector(".cart__order__form")
 formCanape.addEventListener("submit", function (event) {
     event.preventDefault()
+    // Récupération des données du formulaire
     const firstName = document.querySelector("#firstName").value;
     const lastName = document.querySelector("#lastName").value;
     const address = document.querySelector("#address").value;
     const city = document.querySelector("#city").value;
     const email = document.querySelector("#email").value;
 
-    // Vérifiez si les entrées "firstName", "lastName", "city", et "email" ne contiennent que des lettres
-    if (/\d/.test(firstName) || /\d/.test(lastName) || /\d/.test(city)) {
-        alert("Veuillez entrer uniquement des caractères alphabétiques pour votre nom, votre prénom, votre ville et votre adresse email");
+    // Validation des entrées du formulaire
+    const regexLetters = /^[a-zA-Z]+$/; // expression régulière pour vérifier que les entrées ne contiennent que des lettres
+    const regexEmail = /^\S+@\S+\.\S+$/; // expression régulière pour vérifier le format de l'email
+
+    if (!regexLetters.test(firstName)) {
+        firstNameErrorMsg = document.querySelector("#firstNameErrorMsg")
+        firstNameErrorMsg.textContent = "Veuillez entrer uniquement des lettres pour le prénom";
+        
         return;
     }
 
+    if (!regexLetters.test(lastName)) {
+        lastNameErrorMsg = document.querySelector("#lastNameErrorMsg")
+        lastNameErrorMsg.textContent = "Veuillez entrer uniquement des lettres pour le nom.";
+        return;
+    }
+
+    if (address === "") {
+        addressErrorMsg = document.querySelector("#addressErrorMsg")
+        addressErrorMsg.textContent = "Veuillez entrer une adresse valide"
+        return;
+    }
+
+    if (!regexLetters.test(city)) {
+        cityErrorMsg = document.querySelector("#cityErrorMsg")
+        cityErrorMsg.textContent = "Veuillez entrer uniquement des lettres pour la ville.";
+        return;
+    }
+
+    if (!regexEmail.test(email)) {
+        emailErrorMsg = document.querySelector("#emailErrorMsg")
+        emailErrorMsg.textContent = "Veuillez entrer une adresse email valide.";
+        return;
+    }
+
+
     console.log(firstName, lastName, address, city, email)
     console.log(panier.map((produit) => produit.id))
+
+    // Envoi de la commande au serveur
     fetch("http://localhost:3000/api/products/order", {
         method: "post",
         headers: {
