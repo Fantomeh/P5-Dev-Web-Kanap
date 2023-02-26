@@ -77,7 +77,7 @@ for (let canape of panier) {
                 if (newQuantity > 0 && newQuantity <= 100) {
                     canape.quantity = newQuantity;
                     localStorage.setItem("panier", JSON.stringify(panier));
-                    window.location.reload();
+                 
                 } else {
                     inputItemQuantity.value = canape.quantity;
                 }
