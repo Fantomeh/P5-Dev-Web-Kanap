@@ -1,8 +1,8 @@
 // Fetch les produits à partir de l'API
 fetch("http://localhost:3000/api/products/") // envoi une requéte HTTP au SERVEUR 
   .then((res) => res.json()) // Convertir la réponse en JSON
-  .then(function (magasin) { // magasin c'est une fonction anonyme
-    // c'est la variable qui va contenir les réponse du serveur 
+  .then(function (magasin) { //  c'est une fonction anonyme
+    //magasin c'est la variable qui va contenir les réponse du serveur 
 
     // Pour chaque produit dans le magasin
     for (let canape of magasin) {

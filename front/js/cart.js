@@ -8,10 +8,10 @@ for (let canape of panier) {
     fetch("http://localhost:3000/api/products/" + canape.id)
         .then((res) => res.json())
         .then(function (product) {
-            product.quantity = canape.quantity
+            product.quantity = canape.quantity// récupérer la quantité du panier 
             products.push(product)
 
-            updateTotalPrice()
+            updateTotalPrice() // Mise à jour du prix total
 
             // Création de l'élément d'article pour le produit dans le panier
             const articleCanape = document.createElement("article")
@@ -75,18 +75,25 @@ for (let canape of panier) {
             inputItemQuantity.max = "100";
             inputItemQuantity.value = parseInt(canape.quantity);
 
-            // Ajoutez un événement pour écouter les modifications de quantité et mettre à jour le panier
+            // Ajout d'un événement pour écouter les modifications de quantité et mettre à jour le panier
             inputItemQuantity.addEventListener("input", function () {
+                // Récupération de la nouvelle quantité
                 const newQuantity = parseInt(inputItemQuantity.value);
                 console.log(newQuantity)
+                // Vérification que la nouvelle quantité est valide (entre 1 et 100)
                 if (newQuantity > 0 && newQuantity <= 100) {
+                    // Mettre à jour la quantité dans le produit dans le panier
                     canape.quantity = newQuantity;
-                    product.quantity = newQuantity; // mettre à jour la quatité dans le product
+                    product.quantity = newQuantity;
+                    // Mettre à jour le panier dans le stockage local
                     localStorage.setItem("panier", JSON.stringify(panier));
+                    // Mettre à jour le nombre total d'articles
                     updateTotalQuantity();
+                    // Mettre à jour le prix total
                     updateTotalPrice();
                 }
             });
+
 
             // Ajout de la possibilité de supprimer le produit dans le panier
             const cartItemContentSettingDelete = document.createElement("div")
@@ -116,31 +123,32 @@ for (let canape of panier) {
         })
 }
 
+// Calcul du nombre total d'articles dans le panier
 function updateTotalQuantity() {
-    // Calcul du nombre total d'articles
     let totalQuantity = 0;
+    // Boucle pour ajouter la quantité de chaque produit dans le panier
     for (const canape of panier) {
-        totalQuantity += canape.quantity;
+    totalQuantity += canape.quantity;
     }
-
-    // Affichage du nombre total d'articles
+    // Mise à jour de l'affichage du nombre total d'articles
     const totalQuantityElement = document.querySelector("#totalQuantity");
     totalQuantityElement.textContent = totalQuantity;
-}
-
-
-updateTotalQuantity()
-
-function updateTotalPrice() {
-    let totalPrice = 0;
-    for (const canape of products) {
-        totalPrice += canape.price * canape.quantity
-
     }
-
+    
+    // Appel de la fonction pour mettre à jour l'affichage initial du nombre total d'articles
+    updateTotalQuantity();
+    
+    // Calcul du prix total de la commande
+    function updateTotalPrice() {
+    let totalPrice = 0;
+    // Boucle pour ajouter le prix de chaque produit dans le panier en multipliant par sa quantité
+    for (const canape of products) {
+    totalPrice += canape.price * canape.quantity;
+    }
+    // Mise à jour de l'affichage du prix total
     const totalPriceElement = document.querySelector("#totalPrice");
-    totalPriceElement.textContent = totalPrice.toFixed(2);
-}
+    totalPriceElement.textContent = totalPrice.toFixed(2); //toFixe2 pour arrondir à 2 chiffres après la virgule
+    }
 
 // Ajout d'un écouteur d'événement pour le formulaire de commande
 const formCanape = document.querySelector(".cart__order__form");
@@ -225,6 +233,8 @@ boutonForm.addEventListener("click", function (event) {
     })
         .then((res) => res.json())
         .then((order) => {
+            // Envoi réussi, redirection vers la page de confirmation
             window.location.href = "confirmation.html?orderId=" + order.orderId
         })
 })
+
