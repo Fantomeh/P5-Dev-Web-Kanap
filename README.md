@@ -1,6 +1,6 @@
 Projet Kanap - Plateforme de e-commerce
 
-![Screenshot 2023-06-20 at 21-41-05 Construisez un site e-commerce en JavaScript - OpenClassrooms](https://github.com/Fantomeh/P5-Dev-Web-Kanap/assets/115874284/b3d8b902-24f9-4404-ba04-75401205d9fd)
+[![Screenshot 2023-06-20 at 21-41-05 Construisez un site e-commerce en JavaScript - OpenClassrooms](https://github.com/Fantomeh/P5-Dev-Web-Kanap/assets/115874284/b3d8b902-24f9-4404-ba04-75401205d9fd)](https://user.oc-static.com/upload/2021/09/29/16329291678171_image2.png)
 
 Ce projet consiste à développer une plateforme de e-commerce pour Kanap, une marque de canapés souhaitant étendre ses ventes en ligne. Le développement du site s'est déroulé en collaboration avec une équipe composée de Corinne, le CTO de l'agence, et Bilal, le développeur back-end.
 Tâches réalisées
